@@ -5,7 +5,7 @@ clc;
 %% Ucitavanje signala
 for b=["_govor.wav","_muzika_rock.wav","_muzika_pop.wav","_muzika_rnb.wav"]
     ch=convertStringsToChars(b);
-    for a=1:2
+    for a=1:10
         %% Ucitavanje smetnje
         [sum fs_sum] = audioread("Signali\Sum\sum.wav");
         sum=sum';
