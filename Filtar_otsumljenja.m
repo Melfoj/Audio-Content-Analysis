@@ -21,7 +21,7 @@ end
 for b=["_govor_sum.wav","_muzika_rock_sum.wav","_muzika_pop_sum.wav","_muzika_rnb_sum.wav"]
     ch=convertStringsToChars(b);
     it=it+1;
-    for a=1:2
+    for a=1:10
         file_name=sprintf('%d',a);
         switch b
         case "_govor_sum.wav" 
