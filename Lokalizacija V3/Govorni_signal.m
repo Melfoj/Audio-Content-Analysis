@@ -5,7 +5,7 @@ clc;
 %% Govorni signal
 
 % Ucitavanje govornog signala
-[x fs] = audioread("Govor\govor_01.wav");
+[x fs] = audioread("Govor\1_govor.wav");
 t_osa = (0:length(x)-1)/fs;
 
 %% Unosenje periodicne greske
