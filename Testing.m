@@ -18,25 +18,49 @@ for i=1:Nfc
 end
 
 %% Ucitavanje i Filtriranje
-file_name="Signali\Sum\Govor\1_govor_sum.wav";
-[x,fs] = audioread(file_name);
+file_name1="Signali\Sum\Govor\1_govor_sum.wav";
+file_name2="Signali\Cisti\Govor\1_govor.wav";
+[x,fs] = audioread(file_name1);
 x=x./max(abs(x));
+[x2,fs] = audioread(file_name2);
+x2=x2./max(abs(x2));
 y=[];
+y2=[];
 for br=1:23
     y(:, br)=filter(Hd(br+6), x);
     RMS(br)=rms(y(:,br));
+    y2(:, br)=filter(Hd(br+6), x2);
+    RMS2(br)=rms(y2(:,br));
 end
 %RMS=mean(RMS);
 for k=1:23
     x_oktavno(k)=20*log10(RMS(k));
+    x_oktavno2(k)=20*log10(RMS2(k));
     f_oktavno(k)=125*2^((k-2)/3);
 end
-
+dx=x_oktavno-x_oktavno2;
 %x_oktavno=x_oktavno-max(x_oktavno(1,:));
 figure,
-semilogx(f_oktavno, x_oktavno,'-o','LineWidth',3),
+semilogx(f_oktavno, dx,'-o','LineWidth',3),
 title('Oktavni spektar'),
 xlabel('Frekvencija[Hz]'),
 ylabel('Nivo[dB]'),
 xlim([100 16000]),
 grid on;
+
+filt=load('FILT.mat');
+filt=filt.FILT;
+raz=x_oktavno-filt;
+N_filter=50; %privremeni red filtra, posle mozemo da bazdarimo
+wp=f_oktavno./fs*2; % fs/2 nam je pi 
+wd=[0 wp 1]; %zahteva nam da osa pocinje od nule i zavrsava se jedinicom
+h=[];
+s=filt;
+s=s';
+s=-s;
+ap=[];
+for j=1:length(s)
+    ap(j)=10^(s(j)/20); %prevodjenje slabljenja iz dB u osnovne jedinice
+end
+ad=[ap(1) ap 0]; %da bi imalo isti broj clanova kao osa
+h(:,i)=fir2(N_filter,wd,ad); %filtri, stavlja se svako u svoju kolonu

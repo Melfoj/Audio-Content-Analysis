@@ -1,6 +1,6 @@
  clear all; close all; clc;
 
-RMS=[];
+FILT=[];
 it=0;
 
 %% Oktavni Filtar
@@ -41,12 +41,13 @@ for b=["_govor_sum.wav","_muzika_rock_sum.wav","_muzika_pop_sum.wav","_muzika_rn
         y=[];
         for br=1:23
             y(:, br)=filter(Hd(br+6), x);
-            RMS(a,br)=rms(y(:,br));
+            FILT(a,br)=rms(y(:,br));
         end
     end
-    RMS=mean(RMS);
+    FILT=mean(FILT);
+    save FILT.mat;
     for k=-1:21
-        x_oktavno(it,k+2)=20*log10(RMS(k+2));
+        x_oktavno(it,k+2)=20*log10(FILT(k+2));
         f_oktavno(k+2)=125*2^(k/3);
     end
 end
