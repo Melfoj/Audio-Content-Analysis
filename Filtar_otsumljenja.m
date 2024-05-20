@@ -18,41 +18,43 @@ for i=1:Nfc
 end
 
 %% Ucitavanje i Filtriranje
-for b=["_govor_sum.wav","_muzika_rock_sum.wav","_muzika_pop_sum.wav","_muzika_rnb_sum.wav"]
+for b=["_govor.wav","_muzika_rock.wav","_muzika_pop.wav","_muzika_rnb.wav"]
     ch=convertStringsToChars(b);
     it=it+1;
     for a=1:10
         file_name=sprintf('%d',a);
         switch b
-        case "_govor_sum.wav" 
-            file_name=['Signali\Sum\Govor\',file_name,ch];
-        case "_muzika_rock_sum.wav"
-            file_name=['Signali\Sum\Rock\',file_name,ch];
-        case "_muzika_pop_sum.wav"
-            file_name=['Signali\Sum\Pop\',file_name,ch];
-        case "_muzika_rnb_sum.wav"
-            file_name=['Signali\Sum\RnB\',file_name,ch];
+        case "_govor.wav" 
+            file_name=['Signali\Cisti\Govor\',file_name,ch];
+        case "_muzika_rock.wav"
+            file_name=['Signali\Cisti\Rock\',file_name,ch];
+        case "_muzika_pop.wav"
+            file_name=['Signali\Cisti\Pop\',file_name,ch];
+        case "_muzika_rnb.wav"
+            file_name=['Signali\Cisti\RnB\',file_name,ch];
         otherwise
             warning('No such signal.')
         end
         file_name=convertCharsToStrings(file_name);
         [x,fs] = audioread(file_name);
+        x=x(:,1);
         x=x./max(abs(x));
         y=[];
-        for br=1:23
+        for br=1:19
             y(:, br)=filter(Hd(br+6), x);
-            FILT(a,br)=rms(y(:,br));
+            filt(a,br)=rms(y(:,br));
         end
     end
-    FILT=mean(FILT);
-    save FILT.mat;
-    for k=-1:21
-        x_oktavno(it,k+2)=20*log10(FILT(k+2));
-        f_oktavno(k+2)=125*2^(k/3);
+    FILT(it,:)=mean(filt);
+    for k=1:19
+        x_oktavno(it,k)=20*log10(FILT(it,k));
     end
 end
-
-x_oktavno=x_oktavno-max(x_oktavno(1,:));
+for k=1:19
+    f_oktavno(k)=125*2^((k-2)/3);
+end
+save FILT.mat;
+%x_oktavno=x_oktavno-max(x_oktavno(1,:));
 %fvtool(Hd);
 figure,
 semilogx(f_oktavno, x_oktavno,'-o','LineWidth',3),

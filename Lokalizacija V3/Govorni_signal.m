@@ -20,7 +20,8 @@ amp = 0.5;
 for i = 1:T_odb:length(x)
     x(i) = x(i) + amp;
 end
-
+[x fs] = audioread("..\Signali\Sum\Govor\1_govor_sum.wav");
+t_osa = (0:length(x)-1)/fs;
 % Plot sa greskama
 figure, plot(t_osa, x), title('Vremenski oblik formiranog signala'), 
 ylim([min(x)*1.1 max(x)*1.1]),
