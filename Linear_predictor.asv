@@ -14,7 +14,7 @@ for i=1:length(x)
         a = lpc(x(1:max(i-prozor,1)),N);
         est_x(1:i-prozor) = x(1:i-prozor);
         [~, zf] = filter(-[0 a(2:end)], 1, x(1:max(i-prozor,1)));     
-        est_x((i-prozor+1):length(x)) = filter([0 0], -a, zeros(1, length(x)-i+prozor), zf); 
+        est_x((i-p+1):P) = filter([0 0], -a, zeros(1, length(x)-i-prozor), zf); 
         x(max(i-prozor,1):min(i+prozor,length(x)))=est_x(max(i-prozor,1):min(i+prozor,length(est_x)));
     end
 end
@@ -23,7 +23,7 @@ est_x = filter([0 -a(2:end)],1,x);
         
 t=(1:1:length(x))/fs;
 figure,
-plot(t,xog,t,x,locs/fs,pks,"o")
+plot(t,x,locs/fs,pks,"o")
 grid
 xlabel('Sample Number')
 ylabel('Amplitude');

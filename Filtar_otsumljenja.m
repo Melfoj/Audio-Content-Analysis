@@ -53,7 +53,7 @@ end
 for k=1:19
     f_oktavno(k)=125*2^((k-2)/3);
 end
-save FILT.mat;
+save ('FILT.mat', 'FILT');
 %x_oktavno=x_oktavno-max(x_oktavno(1,:));
 %fvtool(Hd);
 figure,
