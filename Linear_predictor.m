@@ -1,4 +1,5 @@
 clc;clear all; close all;
+%% Ucitavanje i promenljive
 file_name ="Signali\Sum\Govor\1_govor_sum.wav";
 [x,fs] = audioread(file_name);
 xog=x;
@@ -6,6 +7,8 @@ T = 0.5;
 N=150;
 T_odb = T*fs;
 n = 0.2*T_odb;
+
+%% Lociranje i uklanjanje suma
 [pks,locs]=findpeaks(x, MinPeakDistance = n, MinPeakHeight = 0.2);
 prozor=10;
 for i=1:length(x)
@@ -18,9 +21,7 @@ for i=1:length(x)
         x(max(i-prozor,1):min(i+prozor,length(x)))=est_x(max(i-prozor,1):min(i+prozor,length(est_x)));
     end
 end
-a = lpc(x,10);
-est_x = filter([0 -a(2:end)],1,x);
-        
+%% Crtanje
 t=(1:1:length(x))/fs;
 figure,
 plot(t,xog,t,x,locs/fs,pks,"o")
@@ -29,4 +30,6 @@ xlabel('Sample Number')
 ylabel('Amplitude');
 % playerx= audioplayer(x,fs);
 % playerestx=audioplayer(est_x,fs);
-
+%% Razlika
+d=xog-x;
+figure, plot(t,d,locs/fs,pks,"o");
