@@ -25,13 +25,13 @@ for b=["_govor.wav","_muzika_rock.wav","_muzika_pop.wav","_muzika_rnb.wav"]
         file_name=sprintf('%d',a);
         switch b
         case "_govor.wav" 
-            file_name=['Signali\Cisti\Govor\',file_name,ch];
+            file_name=['..\Signali\Cisti\Govor\',file_name,ch];
         case "_muzika_rock.wav"
-            file_name=['Signali\Cisti\Rock\',file_name,ch];
+            file_name=['..\Signali\Cisti\Rock\',file_name,ch];
         case "_muzika_pop.wav"
-            file_name=['Signali\Cisti\Pop\',file_name,ch];
+            file_name=['..\Signali\Cisti\Pop\',file_name,ch];
         case "_muzika_rnb.wav"
-            file_name=['Signali\Cisti\RnB\',file_name,ch];
+            file_name=['..\Signali\Cisti\RnB\',file_name,ch];
         otherwise
             warning('No such signal.')
         end

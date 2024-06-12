@@ -18,8 +18,8 @@ for i=1:Nfc
 end
 
 %% Ucitavanje i Filtriranje
-file_name1="Signali\Sum\Govor\1_govor_sum.wav";
-file_name2="Signali\Cisti\Govor\1_govor.wav";
+file_name1="..\Signali\Sum\Govor\1_govor_sum.wav";
+file_name2="..\Signali\Cisti\Govor\1_govor.wav";
 [x,fs] = audioread(file_name1);
 x=x./max(abs(x));
 [x2,fs] = audioread(file_name2);

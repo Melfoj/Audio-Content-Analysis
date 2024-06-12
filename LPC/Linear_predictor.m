@@ -1,6 +1,6 @@
 clc;clear all; close all;
 %% Ucitavanje i promenljive
-file_name ="Signali\Sum\Govor\1_govor_sum.wav";
+file_name ="..\Signali\Sum\Govor\1_govor_sum.wav";
 [x,fs] = audioread(file_name);
 xog=x;
 T = 0.5;
@@ -32,4 +32,6 @@ ylabel('Amplitude');
 % playerestx=audioplayer(est_x,fs);
 %% Razlika
 d=xog-x;
-figure, plot(t,d,locs/fs,pks,"o");
+figure, plot(t,d,locs/fs,pks,"o");% linije su sve sto je otklonjeno iz signala, a kruzici gde se nalazi sum koji je pronadjen i intenzitet
+% I dalje zvuci zasumljeno jer ne mozemo da uklonimo sirokopojasni sum,
+% samo crackle koji se ponekad pojavi kao peak
